@@ -28,4 +28,21 @@ class TweetController extends Controller
     return     $t->delete();
 
     }
+    public function update(Request $request){
+        
+        $t = Tweet::find($request->id);
+        $t->content=$request->content;
+        return $t->save();
+
+    }
+    public function show(Request $request){
+        
+    
+        $t= DB::table('tweets')
+        ->join('users','users.id','=',$request->id)
+        ->select('users.name','tweets.*')->get();
+       
+        return $t;
+
+    }
 }
