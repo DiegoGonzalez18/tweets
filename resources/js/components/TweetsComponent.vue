@@ -13,11 +13,11 @@
               
                       <div class="form-group">
                      
-                        <textarea class="form-control" id="exampleFormControlTextarea1"
+                        <textarea v-model="content" class="form-control" id="exampleFormControlTextarea1"
                          rows="3"></textarea>
                       </div>
                     
-                      <a href="#" class="btn btn-primary" style="float: right">Crear Tweet</a>
+                      <a href="#" class="btn btn-primary" @click="crearTweet()" style="float: right">Crear Tweet</a>
                     </div>
                   </div>
             </div>
@@ -31,14 +31,16 @@
             </div>
             <div class="card-footer bg-transparent border-info">
               <div v-if="usuario.id == tweet.id_user">
-                <span class="badge badge-info">{{ tweet.created_at }}</span>
+                <span class="badge badge-info">{{
+                     since(tweet.created_at) }}</span>
                 <span class="badge badge-success" style="float: right">Editar</span>
                 <span class="badge badge-danger" style="float: right">Borrar</span>
               </div>
 
             </div>
+             
           </div>
-         
+          <br>  <br>
           </div>
               
 </div>  
@@ -47,13 +49,17 @@
 
 <script>
 import  axios from 'axios'
+import toastr from 'toastr'
+import moment from 'moment'
+moment.lang('es')
 let etiqueta= document.head.querySelector('meta[name="user"');
 let user= JSON.parse(etiqueta.content);
     export default {
         data(){
             return {
                 tweets:[],
-                usuario:''
+                usuario:'',
+                content:''
             }
             },
            computed: {
@@ -62,11 +68,28 @@ let user= JSON.parse(etiqueta.content);
               }
            },
             methods: {
+                since:function(d){
+                        return moment(d).fromNow();
+                },
                 getTweets:function(){
                     var urlTweets='index';
                     axios.get(urlTweets).then(response=>{
                         this.tweets=response.data
                         console.log(this.tweets)
+                    })
+                },
+                crearTweet(){
+                    var url="store";
+                    axios.post(url,{
+                        content: this.content
+                    }).then(response=>{
+                        this.getTweets();
+                        this.content='';
+                        toastr.success('Nuevo tweet registrado');
+                    }).
+                    catch(error=>{
+                        toastr.error('Error');
+
                     })
                 }
             },

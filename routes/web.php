@@ -22,3 +22,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('index','TweetController@index');
+Route::post('store','TweetController@store');
+Route::delete('remove','TweetController@destroy');
