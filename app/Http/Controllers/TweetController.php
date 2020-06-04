@@ -21,4 +21,11 @@ class TweetController extends Controller
         $t->id_user=Auth::user()->id;
         return $t->save();
     }
+    public function destroy(Request $request){
+       
+        $t = Tweet::find($request->id);
+        
+    return     $t->delete();
+
+    }
 }

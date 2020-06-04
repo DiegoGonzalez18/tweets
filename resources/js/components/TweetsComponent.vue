@@ -34,7 +34,7 @@
                 <span class="badge badge-info">{{
                      since(tweet.created_at) }}</span>
                 <span class="badge badge-success" style="float: right">Editar</span>
-                <span class="badge badge-danger" style="float: right">Borrar</span>
+                <span class="badge badge-danger" style="float: right" @click="remove(tweet.id)">Borrar</span>
               </div>
 
             </div>
@@ -59,7 +59,7 @@ let user= JSON.parse(etiqueta.content);
             return {
                 tweets:[],
                 usuario:'',
-                content:''
+                content:'',id:''
             }
             },
            computed: {
@@ -86,6 +86,20 @@ let user= JSON.parse(etiqueta.content);
                         this.getTweets();
                         this.content='';
                         toastr.success('Nuevo tweet registrado');
+                    }).
+                    catch(error=>{
+                        toastr.error('Error');
+
+                    })
+                },
+                remove(idr){
+                    this.id=idr
+                    console.log(this.id)
+                           var url="remove?id="+this.id;
+                    axios.delete(url).then(response=>{
+                        this.getTweets();
+                        this.id='';
+                       console.log(response)
                     }).
                     catch(error=>{
                         toastr.error('Error');

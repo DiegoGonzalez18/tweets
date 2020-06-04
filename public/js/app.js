@@ -2007,7 +2007,8 @@ var user = JSON.parse(etiqueta.content);
     return {
       tweets: [],
       usuario: '',
-      content: ''
+      content: '',
+      id: ''
     };
   },
   computed: {
@@ -2031,7 +2032,7 @@ var user = JSON.parse(etiqueta.content);
     crearTweet: function crearTweet() {
       var _this2 = this;
 
-      var url = "create";
+      var url = "store";
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, {
         content: this.content
       }).then(function (response) {
@@ -2039,6 +2040,21 @@ var user = JSON.parse(etiqueta.content);
 
         _this2.content = '';
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Nuevo tweet registrado');
+      })["catch"](function (error) {
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Error');
+      });
+    },
+    remove: function remove(idr) {
+      var _this3 = this;
+
+      this.id = idr;
+      console.log(this.id);
+      var url = "remove?id=" + this.id;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](url).then(function (response) {
+        _this3.getTweets();
+
+        _this3.id = '';
+        console.log(response);
       })["catch"](function (error) {
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.error('Error');
       });
@@ -59264,7 +59280,12 @@ var render = function() {
                     "span",
                     {
                       staticClass: "badge badge-danger",
-                      staticStyle: { float: "right" }
+                      staticStyle: { float: "right" },
+                      on: {
+                        click: function($event) {
+                          return _vm.remove(tweet.id)
+                        }
+                      }
                     },
                     [_vm._v("Borrar")]
                   )
