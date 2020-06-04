@@ -23,17 +23,18 @@
             </div>
         </div>
         <br>
-        <div class="card border-info mb-12" >
-            <div class="card-header bg-transparent border-info">@diegogonzalez</div>
+        <div class="card border-info mb-12" v-for="tweet in tweets" >
+            <div class="card-header bg-transparent border-info">{{tweet.name}}</div>
             <div class="card-body ">
         
-              <p class="card-text">orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <p class="card-text">{{tweet.content}}</p>
             </div>
             <div class="card-footer bg-transparent border-info">
-                <span class="badge badge-info">12-12-2012</span>
+              <div v-if="usuario.id == tweet.id_user">
+                <span class="badge badge-info">{{ tweet.created_at }}</span>
                 <span class="badge badge-success" style="float: right">Editar</span>
                 <span class="badge badge-danger" style="float: right">Borrar</span>
+              </div>
 
             </div>
           </div>
@@ -46,13 +47,20 @@
 
 <script>
 import  axios from 'axios'
+let etiqueta= document.head.querySelector('meta[name="user"');
+let user= JSON.parse(etiqueta.content);
     export default {
         data(){
             return {
                 tweets:[],
+                usuario:''
             }
             },
-           
+           computed: {
+              user(){
+ this.usuario= JSON.parse(etiqueta.content);
+              }
+           },
             methods: {
                 getTweets:function(){
                     var urlTweets='index';
@@ -66,6 +74,8 @@ import  axios from 'axios'
         mounted() {
             console.log('Component mounted.')
                 this.getTweets();
+                 this.usuario= JSON.parse(etiqueta.content);
+                console.log(this.usuario)
         }
     }
 </script>

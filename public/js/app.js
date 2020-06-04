@@ -1989,12 +1989,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
+var etiqueta = document.head.querySelector('meta[name="user"');
+var user = JSON.parse(etiqueta.content);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      tweets: []
+      tweets: [],
+      usuario: ''
     };
+  },
+  computed: {
+    user: function user() {
+      this.usuario = JSON.parse(etiqueta.content);
+    }
   },
   methods: {
     getTweets: function getTweets() {
@@ -2010,6 +2019,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     console.log('Component mounted.');
     this.getTweets();
+    this.usuario = JSON.parse(etiqueta.content);
+    console.log(this.usuario);
   }
 });
 
@@ -37605,82 +37616,91 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._l(_vm.tweets, function(tweet) {
+        return _c("div", { staticClass: "card border-info mb-12" }, [
+          _c("div", { staticClass: "card-header bg-transparent border-info" }, [
+            _vm._v(_vm._s(tweet.name))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body " }, [
+            _c("p", { staticClass: "card-text" }, [
+              _vm._v(_vm._s(tweet.content))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer bg-transparent border-info" }, [
+            _vm.usuario.id != tweet.id_user
+              ? _c("div", [
+                  _c("span", { staticClass: "badge badge-info" }, [
+                    _vm._v(_vm._s(tweet.created_at))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge badge-success",
+                      staticStyle: { float: "right" }
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "badge badge-danger",
+                      staticStyle: { float: "right" }
+                    },
+                    [_vm._v("Borrar")]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\r\n                     Crear Tweet\r\n                    "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("textarea", {
-                  staticClass: "form-control",
-                  attrs: { id: "exampleFormControlTextarea1", rows: "3" }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-primary",
-                  staticStyle: { float: "right" },
-                  attrs: { href: "#" }
-                },
-                [_vm._v("Crear Tweet")]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "card border-info mb-12" }, [
-        _c("div", { staticClass: "card-header bg-transparent border-info" }, [
-          _vm._v("@diegogonzalez")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body " }, [
-          _c("p", { staticClass: "card-text" }, [
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
             _vm._v(
-              "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,\r\n                   when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+              "\r\n                     Crear Tweet\r\n                    "
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer bg-transparent border-info" }, [
-          _c("span", { staticClass: "badge badge-info" }, [
-            _vm._v("12-12-2012")
           ]),
           _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "badge badge-success",
-              staticStyle: { float: "right" }
-            },
-            [_vm._v("Editar")]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "badge badge-danger",
-              staticStyle: { float: "right" }
-            },
-            [_vm._v("Borrar")]
-          )
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: { id: "exampleFormControlTextarea1", rows: "3" }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                staticStyle: { float: "right" },
+                attrs: { href: "#" }
+              },
+              [_vm._v("Crear Tweet")]
+            )
+          ])
         ])
       ])
     ])
